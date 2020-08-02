@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import Header from './Header.jsx'
 import {firebase} from './firebase'
 
 
@@ -8,7 +7,7 @@ function App() {
   const [computadora, setComputadora] = useState('')
   const [marca, setMarca] = useState('')
   const [id, setId] = useState('')
-  const [date, setDate] = useState('')
+  const [encargado, setencargado] = useState('')
   const [edicion, setEdicion] = useState(false)
   const [computadoras, setComputadoras] = useState([])
 
@@ -17,7 +16,6 @@ function App() {
       try {
         const db = firebase.firestore() //Instanciar firestore
         const data = await db.collection('computadoras').get()
-        console.log(data);
         const arrayData = data.docs.map(doc => (
           {
             id: doc.id,
@@ -25,7 +23,6 @@ function App() {
           }
         ))
         const prestados = arrayData.filter(item => item.prestada === true)
-        console.log(prestados);
         setComputadoras(prestados)
       } catch (e) {
         console.log(e);
@@ -39,21 +36,22 @@ function App() {
 
   const agregar = async (e) => {
     e.preventDefault()
+
     if(!computadora.trim()){
       console.log('Contenido vacio');
       return
     }
     try {
+      let fecha = new Date().toISOString().slice(0,10)
       const db = firebase.firestore()
-      let ddate = new Date().toString("M/d/yyyy")
-      console.log(ddate);
-      //ddate = mm + '-' + dd + '-' + yyyy
       const nuevo = {
         nombre : computadora,
         marca: marca,
         cargador: true,
         prestada: true,
-        fechaEntrega: date
+        encargado: encargado,
+        fechaEntrega: fecha,
+        fechaRecibida: ''
       }
       const data = await db.collection('computadoras').add(nuevo)
       setComputadoras([
@@ -62,6 +60,7 @@ function App() {
       ])
       setComputadora('')
       setMarca('')
+      setencargado('')
     } catch (e) {
 
     } finally {
@@ -97,7 +96,6 @@ function App() {
           } : item
         )
       )
-      console.log(arrayEditado);
       setComputadoras(arrayEditado)
       setComputadora('')
       setMarca('')
@@ -112,14 +110,16 @@ function App() {
   const eliminar = (id) => {
     try {
       const db = firebase.firestore()
-      //db.collection('computadoras').doc(id).delete()
+      let fecha = new Date().toISOString().slice(0,10)
+      console.log(fecha);
       db.collection('computadoras').doc(id).update({
-        prestada: false
+        prestada: false,
+        fechaRecibida: fecha
       })
       const arrayEditado = computadoras.map(item =>(
           item.id === id ? {
             id: item.id, //Item siempre igual porque no lo actualizamos
-            prestada: false
+            prestada: false          
           } : item
         )
       )
@@ -174,8 +174,8 @@ function App() {
               <input type="text" className="form-control" onChange = {e => setMarca(e.target.value)} value = {marca}  />
             </div>
             <div className="form-group">
-              <label htmlFor="exampleInputPassword1">Fecha:</label>
-              <input type="date" className="form-control" onChange = {e => setDate(e.target.value)} value = {date}  />
+              <label htmlFor="exampleInputPassword1">Encargado:</label>
+              <input type="text" className="form-control" onChange = {e => setencargado(e.target.value)} value = {encargado}  />
             </div>
             <button type="submit"
                     className= {edicion ? "btn btn-warning" :  "btn btn-primary"}
