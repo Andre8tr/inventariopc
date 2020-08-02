@@ -1,12 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App.jsx';
-import Historial from './Historial.jsx';
+import Start from './Start.jsx';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
-    <Historial />
+    <Start />
   </React.StrictMode>,
   document.getElementById('root')
 );

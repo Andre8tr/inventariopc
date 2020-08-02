@@ -138,7 +138,6 @@ function App() {
 
   return (
     <div className="container">
-      <Header />
       <h1 className = "text-center"> Inventario de computadoras </h1>
       <div className = "row">
         <div className = "col-sm-12 col-md-6 col-lg-6">
