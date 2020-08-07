@@ -73,6 +73,7 @@ function App() {
     setId(item.id)
     setComputadora(item.nombre)
     setMarca(item.marca)
+    setencargado(item.encargado)
   }
 
   const editar = async (e) => {
@@ -85,7 +86,8 @@ function App() {
       const db = firebase.firestore()
       await db.collection('computadoras').doc(id).update({
         nombre: computadora,
-        marca: marca
+        marca: marca,
+        encargado: encargado
       })
       //Volver a mostrar los datos actualizados
       const arrayEditado = computadoras.map(item =>(
@@ -99,6 +101,7 @@ function App() {
       setComputadoras(arrayEditado)
       setComputadora('')
       setMarca('')
+      setencargado('')
       setEdicion(false)
     } catch (e) {
       console.log(e);
@@ -119,7 +122,7 @@ function App() {
       const arrayEditado = computadoras.map(item =>(
           item.id === id ? {
             id: item.id, //Item siempre igual porque no lo actualizamos
-            prestada: false          
+            prestada: false
           } : item
         )
       )
@@ -138,7 +141,7 @@ function App() {
 
   return (
     <div className="container">
-      <h1 className = "text-center"> Inventario de computadoras </h1>
+      <h1 className = "text-center"> Prestamos de computadoras </h1>
       <div className = "row">
         <div className = "col-sm-12 col-md-6 col-lg-6">
           Listado
@@ -146,9 +149,11 @@ function App() {
             {
               computadoras.map(item => (
                 <li className = "list-group-item" key = {item.id}>
-                  {
-                      item.marca + ' - ' + item.nombre
-                  }
+
+                      {item.marca} - {item.nombre} <br />
+                      Encargado: {item.encargado} <br />
+                      Fecha Entrega: {item.fechaEntrega}
+
                   <button className = "btn btn-danger btn-sm float-right mx-2"
                           onClick = {() => eliminar(item.id)}
                           >Recibir</button>

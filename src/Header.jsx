@@ -20,6 +20,11 @@ const Header = () => {
               <span className = "nav-link">Historial</span>
             </li>
           </Link>
+          <Link to = "/catalogos">
+            <li className="nav-item">
+              <span className = "nav-link">Catalogos</span>
+            </li>
+          </Link>
         </ul>
       </div>
     </nav>

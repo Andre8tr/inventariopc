@@ -18,7 +18,10 @@ const Historial = () =>{
 
       }))
       const filtro = arrayData.filter(item => item.prestada === false)
-      setPrestamos(filtro)
+      const ordenado = filtro.sort((a,b) => {
+        return new Date(b.fechaRecibida) - new Date(a.fechaRecibida)
+      })
+      setPrestamos(ordenado)
     } catch (e) {
 
     } finally {
@@ -26,6 +29,7 @@ const Historial = () =>{
     }
 
   }
+
 
 
   return(
@@ -41,15 +45,26 @@ const Historial = () =>{
                   <li key = {item.id} className = "list-group-item">
                     {item.marca} - {item.nombre} <br />
                     Prestada a : {item.encargado} <br />
-                    Recbidia el día: {item.fechaEntrega}
+                    Recbidia el día: {item.fechaRecibida}
                   </li>
                 ))
               }
           </ul>
+
         </div>
       </div>
     </div>
   )
 }
+
+/*
+{
+  prestamos.map(item => (
+    <option key = {item.id}>
+      Hola
+    </option>
+
+  ))
+}*/
 
 export default Historial
