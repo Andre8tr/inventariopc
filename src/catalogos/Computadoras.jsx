@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react'
+import  {useState, useEffect} from 'react'
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core'
+import {  jsx } from '@emotion/core'
 import Menu from '../Menu.jsx'
 import {firebase} from '../firebase.js'
 
@@ -13,7 +13,6 @@ const Computadoras = () => {
   const [verificacion, setVerificacion] = useState(false)
   const [marca, setMarca] = useState('')
   const [edicion, setEdicion] = useState(false)
-  const [cambiado, setCambiado] = useState(false)
 
   useEffect( () => {
      obtenerEquipos()
@@ -78,13 +77,6 @@ const Computadoras = () => {
         marca: marca,
         modelo: modelo
       })
-      const arrayEditado = await equipos.map(item => (
-        item.id === id ? {
-          nombre: equipo,
-          marca: marca,
-          modelo: modelo
-        }: item
-      ))
       await obtenerEquipos()
       limpiar()
     } catch (e) {
@@ -106,7 +98,13 @@ const Computadoras = () => {
 
     }
   }
+  const activarNuevo = () => {
+    setEquipo('')
+    setMarca('')
+    setModelo('')
+    setEdicion(false)
 
+  }
   const limpiar = () => {
     setModelo('')
     setEquipo('')
@@ -127,7 +125,7 @@ const Computadoras = () => {
             {
               equipos.map(item => (
                 <li key={item.id} className = "list-group-item">
-                  {item.nombre}
+                 {item.marca} - {item.nombre}
                   <button className = "btn btn-warning btn-sm float-right btn-sm mx-2"
                           onClick = {() => activarEdicion(item)}>Editar</button>
                   <button className = "btn btn-danger btn-sm float-right btn-sm"
@@ -138,7 +136,7 @@ const Computadoras = () => {
           </ul>
         </div>
         <div className = "col-sm-12 col-md-5 col-lg-5">
-          <h2 className = "text-center">Ingreso de computadoras</h2>
+          <h2 className = "text-center">{edicion ? 'Editar computadora' : 'Agregar computadora'}</h2>
           <form onSubmit ={edicion ? editar : agregar}>
             <div className="form-group">
               <label htmlFor="exampleInputEmail1">Nombre</label>
@@ -152,15 +150,8 @@ const Computadoras = () => {
               <label htmlFor="exampleFormControlSelect2">Marca</label>
               <select  className="form-control" onChange={(e) => {
                 setMarca(e.target.value)
-                setCambiado(true)
               }}
-
-              /*
-              {
-                ...cambiado ? 'value = {marca}' : 'defaultValue ={"DEFAULT"}'
-              }*/
-              value = {marca}
-                    >
+              value = {marca} >
                 <option  hidden >Seleccione una opción...</option>
                 <option>Acer</option>
                 <option>HP</option>
@@ -170,7 +161,10 @@ const Computadoras = () => {
               </select>
               <small  className={verificacion ? 'form-text text-muted alert-danger' : 'form-text text-muted'}>{verificacion ? 'Debe de seleccionar un valor' : ''}</small>
             </div>
-            <button type="submit" className="btn btn-primary">Enviar</button>
+            <button type="submit" className= {edicion ? "btn btn-warning mx-2" : "btn btn-primary" }>{edicion ? "Editar" : "Enviar"}</button>
+            <button className= {edicion ? "btn btn-success" : "btn btn-success d-none mx-2"}
+                    onClick = {() => activarNuevo()} >{edicion ? "Nuevo" : ""}</button>
+
           </form>
         </div>
       </div>

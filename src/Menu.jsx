@@ -1,9 +1,21 @@
 import {Link} from 'react-router-dom'
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core'
+import styled from '@emotion/styled'
 
 
 const Menu = () => {
+  const Li = styled.li `
+  text-decoration: none;
+  color: black;
+  transition: 0.3s;
+  list-style: none;
+  &:hover{
+    text-decoration: none;
+    color: black;
+    transition: 0.3s;
+    list-style: none;
+  }`
   return(
 
     <aside>
@@ -11,15 +23,16 @@ const Menu = () => {
       <ul className = "list-group" css = {css`
         list-style: none;
         text-decoration: none;
+        text-decoration: none;
       `}>
         <Link to = "/catalogos">
-          <li className = "list-group-item" > Personas </li>
+          <Li className = "list-group-item"> Personas </Li>
         </Link>
         <Link to = "/catalogos/departamentos">
-          <li className = "list-group-item"> Departamentos </li>
+          <Li className = "list-group-item"> Departamentos </Li>
         </Link>
         <Link to = "/catalogos/computadoras">
-          <li className = "list-group-item"> Computadoras </li>
+          <Li className = "list-group-item"> Computadoras </Li>
         </Link>
       </ul>
     </div>

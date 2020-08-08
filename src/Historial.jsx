@@ -30,8 +30,6 @@ const Historial = () =>{
 
   }
 
-
-
   return(
     <div className="container">
       <h1 className = "text-center"> Historial de prestamos </h1>
@@ -57,14 +55,6 @@ const Historial = () =>{
   )
 }
 
-/*
-{
-  prestamos.map(item => (
-    <option key = {item.id}>
-      Hola
-    </option>
 
-  ))
-}*/
 
 export default Historial

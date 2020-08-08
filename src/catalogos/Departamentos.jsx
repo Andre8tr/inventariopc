@@ -50,7 +50,7 @@ const Departamento = () => {
     } catch (e) {
 
     } finally {
-
+      limpiar()
     }
   }
 
