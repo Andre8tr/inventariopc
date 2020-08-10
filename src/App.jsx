@@ -5,7 +5,6 @@ import {firebase} from './firebase'
 
 function App() {
   const [computadora, setComputadora] = useState('')
-  const [marca, setMarca] = useState('')
   const [id, setId] = useState('')
   const [encargado, setencargado] = useState('')
   const [edicion, setEdicion] = useState(false)
@@ -71,6 +70,7 @@ function App() {
     e.preventDefault()
 
     if(!computadora.trim()){
+      setVerificacion(true)
       console.log('Contenido vacio');
       return
     }
@@ -91,7 +91,6 @@ function App() {
         {...nuevo, id: data.id}
       ])
       setComputadora('')
-      setMarca('')
       setencargado('')
     } catch (e) {
 
@@ -120,7 +119,6 @@ function App() {
         encargado: encargado
       })
       setComputadora('')
-      setMarca('')
       setencargado('')
       setEdicion(false)
     } catch (e) {
